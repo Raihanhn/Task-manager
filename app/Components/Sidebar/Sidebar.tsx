@@ -136,12 +136,13 @@ const SidebarStyled = styled.nav`
 
   .nav-item {
     position: relative;
-    padding: 0.6rem 1rem 1rem 2.1rem;
+    padding: 0.8rem 1rem 0.9rem 2.1rem;
     margin: 0.3rem 0;
 
     display: grid;
     grid-template-columns: 40px 1fr;
     cursor: pointer;
+    align-items: center;
 
     &::after {
       position: absolute;
@@ -171,6 +172,7 @@ const SidebarStyled = styled.nav`
       font-weight: 500;
       transition: all 0.3s ease-in-out;
       z-index: 2;
+      line-height: 0;
     }
 
     i {
@@ -184,6 +186,22 @@ const SidebarStyled = styled.nav`
         width: 100%;
       }
     }
+  }
+
+  .active {
+    background-color: ${(props) => props.theme.activeNavLink};
+    i,
+    a {
+      color: ${(props) => props.theme.colorIcons2};
+    }
+  }
+
+  .active::before {
+    width: 0.3rem;
+  }
+
+  > button {
+    margin: 1.5rem;
   }
 `;
 
