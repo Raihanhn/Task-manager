@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 function CreateContent() {
   const [title, setTitle] = useState("");
@@ -34,7 +35,6 @@ function CreateContent() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(title, description, date, completed, important);
 
     const task = {
       title,
@@ -46,7 +46,16 @@ function CreateContent() {
 
     try {
       const res = await axios.post("/api/tasks", task);
-    } catch (error) {}
+
+      if (res.data.error) {
+        toast.error(res.data.error);
+      }
+
+      toast.success("Task created successfully.");
+    } catch (error) {
+      toast.error("Something went wrong!");
+      console.log(error);
+    }
   };
 
   return (
@@ -90,7 +99,7 @@ function CreateContent() {
       <div className="input-control">
         <label htmlFor="completed">Toggle Completed</label>
         <input
-          value={completed.toString}
+          value={completed.toString()}
           type="checkbox"
           name="completed"
           id="completed"
@@ -101,7 +110,7 @@ function CreateContent() {
       <div className="input-control">
         <label htmlFor="important">Toggle Important</label>
         <input
-          value={important.toString}
+          value={important.toString()}
           type="checkbox"
           name="important"
           id="important"
