@@ -10,8 +10,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized", status: 401 });
     }
 
-    const { title, description, date, isCompleted, isImportant } =
-      await req.json();
+    const { title, description, date, completed, important } = await req.json();
 
     if (!title || !description || !date) {
       return NextResponse.json({
@@ -32,8 +31,8 @@ export async function POST(req: Request) {
         title,
         description,
         date,
-        isCompleted,
-        isImportant,
+        isCompleted: completed,
+        isImportant: important,
         userId,
       },
     });
@@ -46,6 +45,13 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
+    const { userId } = auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized", status: 401 });
+    }
+    const tasks = await prisma.task.findMany({ where: { userId } });
+    console.log("TASKS:", tasks);
+    return NextResponse.json({ tasks });
   } catch (error) {
     console.log("ERROR GETTING TASK:", error);
     return NextResponse.json({ error: "Error getting task", status: 500 });
