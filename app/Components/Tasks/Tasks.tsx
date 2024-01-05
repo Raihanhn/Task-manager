@@ -1,14 +1,32 @@
 "use client";
 import CreateContent from "@/app/Components/Modals/CreateContent";
+import TaskItem from "@/app/Components/TaskItem/TaskItem";
 import { useGlobalState } from "@/app/context/globalProvider";
 import React from "react";
 import styled from "styled-components";
 
-function Tasks() {
+interface Props {
+  title: string;
+  tasks: any[];
+}
+
+function Tasks({ title, tasks }: Props) {
   const { theme } = useGlobalState();
   return (
     <TaskStyled theme={theme}>
-      <CreateContent />
+      <h1>{title}</h1>
+      <div className="tasks grid">
+        {tasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            title={task.title}
+            description={task.description}
+            date={task.date}
+            isCompleted={task.completed}
+            id={task.id}
+          />
+        ))}
+      </div>
     </TaskStyled>
   );
 }
