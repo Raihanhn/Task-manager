@@ -8,12 +8,14 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import Button from "../Button/Button";
 import { logout } from "@/app/utils/Icons";
+import { useClerk } from "@clerk/nextjs";
 
 function Sidebar() {
   const { theme } = useGlobalState();
 
   const router = useRouter();
   const pathname = usePathname();
+  const { signOut } = useClerk();
 
   const handleClick = (link: string) => {
     router.push(link);
@@ -45,7 +47,7 @@ function Sidebar() {
           );
         })}
       </ul>
-      <div className="sign-out relative">
+      <div className="sign-out relative m-6">
         <Button
           name={"Sign Out"}
           type={"submit"}
@@ -54,6 +56,7 @@ function Sidebar() {
           fw={"500"}
           fs={"1.2rem"}
           icon={logout}
+          click={() => router.push("/signin")}
         />
       </div>
     </SidebarStyled>
