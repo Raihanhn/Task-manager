@@ -16,7 +16,6 @@ function Tasks({ title, tasks }: Props) {
 
   return (
     <TaskStyled theme={theme}>
-      <CreateContent />
       <h1>{title}</h1>
       {!isLoading ? (
         <div className="tasks grid">
@@ -26,7 +25,7 @@ function Tasks({ title, tasks }: Props) {
               title={task.title}
               description={task.description}
               date={task.date}
-              isCompleted={task.completed}
+              isCompleted={task.isCompleted}
               id={task.id}
             />
           ))}
