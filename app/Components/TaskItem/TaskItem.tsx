@@ -78,7 +78,7 @@ const TaskItemStyled = styled.div`
     .completed,
     .incomplete {
       display: inline-block;
-      padding: 0%.4rem 1rem;
+      padding: 0.4rem 1rem;
       background: ${(props) => props.theme.colorDanger};
       border-radius: 30px;
     }
