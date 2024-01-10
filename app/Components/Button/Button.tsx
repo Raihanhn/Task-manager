@@ -18,6 +18,7 @@ interface Props {
   dClick?: () => void;
   border?: string;
   form?: string;
+  color?: string;
 }
 
 function Button({
@@ -31,6 +32,7 @@ function Button({
   selector,
   click,
   type,
+  color,
   border,
 }: Props) {
   const { theme } = useGlobalState();
@@ -45,6 +47,7 @@ function Button({
         fontWeight: fw || "500",
         fontSize: fs,
         border: border || "none",
+        color: color || theme.colorGrey2,
       }}
       theme={theme}
       onClick={click}

@@ -77,7 +77,6 @@ const TaskStyled = styled.main`
     left: 0;
     width: 3rem;
     height: 0.2rem;
-    background-color: ${(props) => props.theme.colorPrimaryGreen};
     border-radius: 0.5rem;
   }
 
