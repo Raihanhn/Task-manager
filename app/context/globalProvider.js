@@ -15,7 +15,16 @@ export const GlobalProvider = ({ children }) => {
   const theme = themes[selectedTheme];
   const [isLoading, setIsLoading] = useState(false);
 
+  const [modal, setModal] = useState(false);
   const [tasks, setTasks] = useState([]);
+
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   const allTasks = async () => {
     setIsLoading(true);
@@ -46,7 +55,6 @@ export const GlobalProvider = ({ children }) => {
       toast.success("Task updated");
       allTasks();
     } catch (error) {
-      console.log(error);
       toast.error("Something went wrong");
     }
   };
@@ -64,12 +72,15 @@ export const GlobalProvider = ({ children }) => {
       value={{
         theme,
         tasks,
+        modal,
         deleteTask,
         isLoading,
         completedTasks,
         importantTasks,
         incompleteTasks,
         updateTask,
+        openModal,
+        closeModal,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>
