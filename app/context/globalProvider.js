@@ -16,6 +16,7 @@ export const GlobalProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [modal, setModal] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const [tasks, setTasks] = useState([]);
 
   const openModal = () => {
@@ -90,6 +91,7 @@ export const GlobalProvider = ({ children }) => {
         openModal,
         closeModal,
         allTasks,
+        collapsed,
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>
