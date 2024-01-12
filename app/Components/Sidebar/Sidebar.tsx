@@ -11,7 +11,7 @@ import { arrowLeft, bars, logout } from "@/app/utils/Icons";
 import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 
 function Sidebar() {
-  const { theme, collapsed } = useGlobalState();
+  const { theme, collapsed, collapseMenu } = useGlobalState();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -29,8 +29,10 @@ function Sidebar() {
   };
 
   return (
-    <SidebarStyled theme={theme}>
-      <button className="toggle-nav">{collapsed ? bars : arrowLeft}</button>
+    <SidebarStyled theme={theme} collapsed={collapsed}>
+      <button className="toggle-nav" onClick={collapseMenu}>
+        {collapsed ? bars : arrowLeft}
+      </button>
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image">
@@ -76,7 +78,7 @@ function Sidebar() {
   );
 }
 
-const SidebarStyled = styled.nav`
+const SidebarStyled = styled.nav<{ collapsed: boolean }>`
   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
   background-color: ${(props) => props.theme.colorBg2};
@@ -89,10 +91,25 @@ const SidebarStyled = styled.nav`
 
   color: ${(props) => props.theme.colorGrey3};
 
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    height: calc(100vh - 2rem);
+    z-index: 100;
+
+    transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
+    transform: ${(props) =>
+      props.collapsed ? "translateX(-107%)" : "translateX(0)"};
+
+    .toggle-nav {
+      display: block !important;
+    }
+  }
+
   .toggle-nav {
-    padding: 0.8rem;
+    display: none;
+    padding: 0.8rem 0.9rem;
     position: absolute;
-    right: -66px;
+    right: -69px;
     top: 1.8;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
@@ -100,12 +117,6 @@ const SidebarStyled = styled.nav`
     border-top: 2px solid ${(props) => props.theme.borderColor2};
     border-right: 2px solid ${(props) => props.theme.borderColor2};
     border-bottom: 2px solid ${(props) => props.theme.borderColor2};
-  }
-
-  @media screen and (max-width: 768px) {
-    position: fixed;
-    height: calc(100vh - 2rem);
-    z-index: 100;
   }
 
   .user-btn {
