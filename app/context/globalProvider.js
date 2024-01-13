@@ -32,7 +32,7 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const allTasks = async () => {
-    setIsLoading(true);
+    setIsLoading(false);
     try {
       const res = await axios.get("/api/tasks");
       const sorted = res.data.sort((a, b) => {
